@@ -11,10 +11,8 @@ void read_env_val(const char* profile) {
 
   while (fgets(line_buffer, sizeof(line_buffer), infile)) {
     if(strstr(line_buffer,"HOME") != NULL) {
-      printf("HOME exists.\n");
     }
-    else if(strstr(line_buffer,"PROFILE") != NULL) {
-      printf("PROFILE exists.\n");
+    else if(strstr(line_buffer,"PATH") != NULL) {
     }
   }
 }
