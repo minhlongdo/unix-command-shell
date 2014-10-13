@@ -1,5 +1,5 @@
-#ifndef INIT_H
-#define INIT_H
+#ifndef _INIT_H
+#define _INIT_H
 
 #include <stdio.h>
 #include <stdlib.h>
