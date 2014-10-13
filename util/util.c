@@ -32,8 +32,6 @@ void replace(char* buffer, char* string, char **result) {
   while(string[len_string] != '\0') {
     ++len_string;
   }
-  printf("Buffer: %s | %i\n", buffer, len_buffer);
-  printf("Replacement: %s | %i\n", string, len_string);
   int index = 0;
   int i = 0;
   char *tmp = malloc(sizeof(char)*(len_buffer - len_string));
