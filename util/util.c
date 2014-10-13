@@ -1,28 +1,20 @@
 #include "util.h"
 
-char* read_env_val(char* env_var, char* profile) {
-  FILE* fp;
-  char *line = NULL;
-  size_t len = 0;
-  ssize_t read = 0;
-
-  fp = fopen(profile, 'r');
-  if (fp == NULL)
-    fprintf(stderr, "Need to create profile for unix command shell.\n");
-    return exit(FAILURE)
-
-  /* Read through every line */
-  while((read = getline(&line, &len, fp)) != -1) {
-    printf("%s", line);
-    if (strstr(line, env_var) != NULL) {
-      fclose(fp);
-      return line
-    }
+void read_env_val(const char* environment_var, const char* profile) {
+  FILE *infile;
+  char line_buffer[BUFSIZ]; /* BUFSIZ is defined if you include stdio.h */
+  char line_number;
+  infile = fopen(profile, "r");
+  if (!infile) {
+    printf("Couldn't open file %s for reading.\n", profile);
   }
 
-  printf("Coudln't find specified environment variable in %s\n", profile);
-  fclose(fp);
-  if (line)
-    free(line);
-  return NULL;
+  while (fgets(line_buffer, sizeof(line_buffer), infile)) {
+    if(strstr(line_buffer,"HOME") != NULL) {
+      printf("HOME exists.\n");
+    }
+    else if(strstr(line_buffer,"PROFILE") != NULL) {
+      printf("PROFILE exists.\n");
+    }
+  }
 }

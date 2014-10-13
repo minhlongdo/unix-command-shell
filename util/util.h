@@ -3,9 +3,9 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <errno.h>
 #include <string.h>
 
-char* read_env_val(char*, char*); /* Find environment variable */
+/* Open existing file for reading */
+void read_env_val(const char* environment_var, const char* profile); /* Find environment variable */
 
 #endif
