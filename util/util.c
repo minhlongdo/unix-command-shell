@@ -1,4 +1,4 @@
-#include "unix_func.h"
+#include "util.h"
 
 char* read_env_val(char* env_var, char* profile) {
   FILE* fp;
@@ -8,9 +8,8 @@ char* read_env_val(char* env_var, char* profile) {
 
   fp = fopen(profile, 'r');
   if (fp == NULL)
-    printf("Need to create profile for unix command shell.\n");
-    printf("Creating new profile for unix command shell.\n");
-    return NULL;
+    fprintf(stderr, "Need to create profile for unix command shell.\n");
+    return exit(FAILURE)
 
   /* Read through every line */
   while((read = getline(&line, &len, fp)) != -1) {
