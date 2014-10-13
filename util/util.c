@@ -13,12 +13,14 @@ void read_env_val(const char* profile, EnvVariable** env) {
     if(strstr(line_buffer,"HOME") != NULL) {\
       char* tmp;
       replace(line_buffer, "HOME=", &tmp);
-      printf("%s",tmp);
+      (*env)->home = tmp;
+      //printf("%s",tmp);
     }
     else if(strstr(line_buffer,"PATH") != NULL) {
       char* tmp;
       replace(line_buffer, "PATH=", &tmp);
-      printf("%s",tmp);
+      (*env)->path = tmp;
+      //printf("%s",tmp);
     }
   }
 }

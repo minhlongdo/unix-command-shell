@@ -14,9 +14,14 @@ int main(int argc, char** argv) {
   gtk_main();
   */
 
-
+  EnvVariable* env = (EnvVariable*)malloc(sizeof(EnvVariable));
   printf("Starting Unix Command Shell.\n");
-  read_env_val("profile");
+  read_env_val("profile", &env);
+
+  printf("PATH: %s\n", env->path);
+  printf("HOME: %s\n", env->home);
+
+  free(env);
 
   return 0;
 }
