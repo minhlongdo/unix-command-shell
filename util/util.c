@@ -1,6 +1,6 @@
 #include "util.h"
 
-void read_env_val(const char* environment_var, const char* profile) {
+void read_env_val(const char* profile) {
   FILE *infile;
   char line_buffer[BUFSIZ]; /* BUFSIZ is defined if you include stdio.h */
   char line_number;

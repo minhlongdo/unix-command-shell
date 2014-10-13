@@ -6,6 +6,6 @@
 #include <string.h>
 
 /* Open existing file for reading */
-void read_env_val(const char* environment_var, const char* profile); /* Find environment variable */
+void read_env_val(char* environment_var, const char* profile); /* Find environment variable */
 
 #endif
