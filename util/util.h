@@ -4,9 +4,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../datastructure/env.h"
+#include <errno.h>
+#include "../datastructure/terminal.h"
 
-void read_env_val(const char* profile, EnvVariable** env); 					 /* Find environment variable */
+void read_env_val(const char* profile, Terminal** terminal); 				 /* Find environment variable */
 void replace(char* buffer, char* string, char** result); 						 /* Replace string */
+void command_parser(char* input, Terminal** terminal);               /* Parse command */
 
 #endif

@@ -4,14 +4,17 @@
 
 int main(int argc, char** argv) {
 
-  EnvVariable* env = (EnvVariable*)malloc(sizeof(EnvVariable));
+  Terminal* terminal = (Terminal*)malloc(sizeof(Terminal));
+  terminal->env = (EnvVariable*)malloc(sizeof(EnvVariable));
   printf("Starting Unix Command Shell.\n");
-  read_env_val("profile", &env);
+  read_env_val("profile", &terminal);
 
-  printf("PATH: %s\n", env->path);
-  printf("HOME: %s\n", env->home);
+  printf("PATH: %s\n", (terminal->env)->path);
+  printf("HOME: %s\n", (terminal->env)->home);
 
-  free(env);
+  /* Free memory */
+  free(terminal->env);
+  free(terminal);
 
   return 0;
 }
