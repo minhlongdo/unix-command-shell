@@ -7,8 +7,10 @@
 #include <errno.h>
 #include "../datastructure/terminal.h"
 
-void read_env_val(const char* profile, Terminal** terminal); 				 /* Find environment variable */
-void replace(char* buffer, char* string, char** result); 						 /* Replace string */
-void command_parser(char* input, Terminal** terminal);               /* Parse command */
-
+/* Find environment variable */
+void read_env_val(const char* profile, Terminal** terminal);
+/* Replace string */
+void replace(char* buffer, char* string, char** result);
+/* Parse command */
+void command_parser(char* input, Terminal** terminal);
 #endif
