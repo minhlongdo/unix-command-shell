@@ -5,12 +5,17 @@
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
-#include "../datastructure/terminal.h"
+#include <unistd.h>
+#include "../datastructure/env.h"
 
 /* Find environment variable */
-void read_env_val(const char* profile, Terminal** terminal);
+void read_env_val(const char* profile, EnvVariable** env);
 /* Replace string */
 void replace(char* buffer, char* string, char** result);
 /* Parse command */
-void command_parser(char* input, Terminal** terminal);
+void command_parser(char* input, EnvVariable** env);
+/* Change directory */
+void change_dir(char* dir, EnvVariable** env);
+/* Get current directory */
+char* current_dir(void);
 #endif

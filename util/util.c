@@ -1,23 +1,45 @@
 #include "util.h"
 
-void command_parser(char* input, Terminal** terminal) {
-
-  if (*terminal != NULL) {
-    if ((*terminal)->env != NULL) {
-      /* Check for home and path variables */
-      if ((*terminal)->env->home == NULL)
-        perror("No value specified for HOME.\n");
-      if ((*terminal)->env->path == NULL)
-        perror("No value specified for PATH.\n");
-      if ((*terminal)->cur_dir == NULL)
-        perror("Unknown current directory.\n");
+void change_dir(char* dir, EnvVariable** env) {
+  char* curr = current_dir();
+  if (dir != NULL) {
+    if(strcmp(dir,"..")) {
+      /* Change to parent directory */
+    } else {
+      /* Change to specific directory */
+      /* Check in current directory */
+      /* Check for another absolute directory */
     }
   }
-
-  /* Parse command */
 }
 
-void read_env_val(const char* profile, Terminal** terminal) {
+char* current_dir(void) {
+  char cwd[1024];
+  if(getcwd(cwd,sizeof(cwd)) != NULL)
+    fprintf(stdout,"%s\n",cwd);
+  else
+    perror("getcwd() error");
+  return cwd;
+}
+
+void command_parser(char* input, EnvVariable** env) {
+  /* Parse command */
+  if (input != NULL) {
+    /* Check for in-built commands */
+    if (strcmp(input,"cd") == 0) {
+
+    } else if(strcmp(input,"pwd") == 0) {
+
+    } else {
+      /* Checking for attempt to execute executable */
+      /* Executing none in-built commands */
+      char *command = input;
+      /* Split command from arguments */
+    }
+  }
+}
+
+void read_env_val(const char* profile, EnvVariable** env) {
   FILE *infile;
   char line_buffer[BUFSIZ]; /* BUFSIZ is defined if you include stdio.h */
   infile = fopen(profile, "r");
@@ -29,14 +51,12 @@ void read_env_val(const char* profile, Terminal** terminal) {
     if(strstr(line_buffer,"HOME") != NULL) {
       char* tmp;
       replace(line_buffer, "HOME=", &tmp);
-      ((*terminal)->env)->home = tmp;
-      //printf("%s",tmp);
+      (*env)->home = tmp;
     }
     else if(strstr(line_buffer,"PATH") != NULL) {
       char* tmp;
       replace(line_buffer, "PATH=", &tmp);
-      ((*terminal)->env)->path = tmp;
-      //printf("%s",tmp);
+      (*env)->path = tmp;
     }
   }
 }

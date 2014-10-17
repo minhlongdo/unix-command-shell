@@ -4,18 +4,30 @@
 
 int main(int argc, char** argv) {
 
-  Terminal* terminal = (Terminal*)malloc(sizeof(Terminal));
-  terminal->env = (EnvVariable*)malloc(sizeof(EnvVariable));
+  EnvVariable* env = (EnvVariable*)malloc(sizeof(EnvVariable));
+  init(&env);
   printf("Starting Unix Command Shell.\n");
-  init(&terminal);
+  printf("HOME: %s",env->home);
+  printf("PATH: %s",env->path);
 
-  printf("PATH: %s", (terminal->env)->path);
-  printf("HOME: %s", (terminal->env)->home);
-  printf("Current dir: %s", terminal->cur_dir);
+/*
+  while(1) {
+    char* input;
 
+    /* parsing command and execute */
+    /*
+    command_parser(input, &terminal)
+    */
+
+    /* Break from while loop */
+    /*
+    if(strcmp(input,"exit")) {
+      break;
+    }
+  }
+  */
   /* Free memory */
-  free(terminal->env);
-  free(terminal);
+  free(env);
 
   return 0;
 }
