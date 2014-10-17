@@ -1,10 +1,17 @@
 #include "util.h"
 
 void change_dir(char* dir, EnvVariable** env) {
-  char* curr = current_dir();
   if (dir != NULL) {
+    char* curr = current_dir();
     if(strcmp(dir,"..")) {
       /* Change to parent directory */
+      int i = 0;
+      for(i=strlen(curr);i>=0;i--) {
+        if(curr[i] == '/')
+          break;
+      }
+    } else if(strcmp(dir,"")) {
+      /* Change to default directory, specified in the environment variable */
     } else {
       /* Change to specific directory */
       /* Check in current directory */
