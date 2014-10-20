@@ -17,7 +17,7 @@ void replace(char* buffer, char* string, char** result);
 /* Parse command */
 void command_parser(char* input, EnvVariable** env);
 /* Change directory */
-void change_dir(char* dir, EnvVariable** env);
+void change_dir(char** curr_dir, char* dir, EnvVariable** env);
 /* Get current directory */
 char* current_dir(void);
 #endif

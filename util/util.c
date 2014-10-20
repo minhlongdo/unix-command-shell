@@ -1,16 +1,10 @@
 #include "util.h"
 
-void change_dir(char* dir, EnvVariable** env) {
+void change_dir(char** curr_dir, char* dir, EnvVariable** env) {
   if (dir != NULL) {
-    char* curr = current_dir();
-    if(strcmp(dir,"..")) {
-      /* Change to parent directory */
-      int i = 0;
-      for(i=strlen(curr);i>=0;i--) {
-        if(curr[i] == '/')
-          break;
-      }
-    } else if(strcmp(dir,"")) {
+    /* Move up one directory */
+    if(strcmp(dir, "..")) {
+    } else if(strcmp(dir, "")) {
       /* Change to default directory, specified in the environment variable */
     } else {
       /* Change to specific directory */
