@@ -5,7 +5,6 @@
 int main(int argc, char** argv) {
 
   EnvVariable* env = (EnvVariable*)malloc(sizeof(EnvVariable));
-  char c;
   char* cmd = (char*)malloc(sizeof(char)*100);
   char* path_str = (char*)malloc(sizeof(char)*256);
   char* tmp = (char*)malloc(sizeof(char)*100);
@@ -17,11 +16,14 @@ int main(int argc, char** argv) {
   printf("Current: %s\n", dir);
 
   /* Print {directory}>*/
+  printf("%s>", dir);
+  scanf("%s", cmd);
+  printf("Entered command: %s\n", cmd);
   /* Read command */
   /* Parse command */
   /* Conditional executions */
   /* Check for child process etc. */
-  /* Repeat */
+  /* Repeat until exit entered */
 
   /* Free memory */
   free(env);
