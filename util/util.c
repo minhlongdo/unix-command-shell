@@ -24,21 +24,6 @@ void terminal_main(EnvVariable** env) {
     memset(cmd, '\0', sizeof(cmd));
   }
 
-
-
-
-  int flag = chdir("..");
-  if (flag == 0) {
-    current_dir(&dir);
-    printf("Change to directory: %s\n", dir);
-  } else if(flag == -1) {
-    printf("Couldnt change directory.");
-    current_dir(&dir);
-    printf("Current directory: %s\n", dir);
-  } else {
-    perror("Unexpected error.");
-  }
-
   /* Release memory */
   free(cmd);
   free(dir);
