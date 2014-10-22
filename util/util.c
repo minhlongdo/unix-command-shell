@@ -64,7 +64,7 @@ void change_dir(char* dir, EnvVariable** env) {
       current_dir(&dir_debug);
       printf("Current directory: %s\n", dir_debug);
     }
-  } else if (strcmp(dir, "..")) {
+  } else if (strcmp(dir, "..") == 0) {
     flag = chdir(dir);
     if (flag == -1) {
       current_dir(&dir_debug);
@@ -93,7 +93,7 @@ void current_dir(char** dir) {
   }
   else {
     /* Reset string */
-    memset((*dir), 0, sizeof((*dir)));
+    memset((*dir), 0, sizeof(&(*dir)));
     perror("getcwd() error");
   }
 }
@@ -114,21 +114,59 @@ void command_parser(char** cmd, EnvVariable** env) {
   int len = strlen(*cmd);
   (*cmd)[len-1] = '\0';
 
-  char* strArray[10];
   /* Tokenize command */
-  char* token = strtok((*cmd), " ");
+  char* token = NULL;
+  token = strtok((*cmd), " ");
+  char* strArray[40];
 
-  int i = 0;
-  for(i=0; token != NULL;i++) {
-    strcpy(strArray, token);
-    printf("[%s] - %i\n", token, strlen(token));
-    token = strtok(NULL, " ");
-  }
   /*
-  while(token != NULL) {
-
+   * Number of tokens.
+   * First token is the command.
+   * The following tokens are arguments.
+   */
+  int i = 0;
+  if (strstr((*cmd), " ") !=  NULL) {
+    while(token != NULL) {
+      //printf("[%s]\n", token);
+      strArray[i] = (char*)malloc(sizeof(char)*strlen(token));
+      strcpy(strArray[i], token);
+      //printf("Array string: %s\n",strArray[i]);
+      token = strtok(NULL, " ");
+      i++;
+    }
+  } else {
+    strArray[i] = (char*)malloc(sizeof(char)*strlen((*cmd)));
+    strArray[i] = *cmd;
   }
-  */
+
+  char* command = strArray[0];
+  //printf("Command: %s\n", command);
+  /* Checking for unix in-built commands */
+  if (strcmp(command, "cd") == 0) {
+    if (i == 2) {
+      char* dir_dest = strArray[1];
+      printf("Directory destination: %s\n", dir_dest);
+      change_dir(dir_dest, &(*env));
+    } else if(i < 2) {
+      perror("Too few argument.\n");
+    } else if (i > 2) {
+      perror("Too many arguments.\n");
+    }
+  } else if (strcmp(command, "ls") == 0) {
+
+  } else if (strcmp(command, "pwd") == 0) {
+    char* dir_curr = (char*)malloc(sizeof(char)*1024);
+    current_dir(&dir_curr);
+    printf("%s\n", dir_curr);
+    free(dir_curr);
+  } else {
+    /* Tokenize environment PATH value */
+  }
+  /* Free memory */
+  while(i > - 1) {
+    free(strArray[i]);
+    i--;
+  }
 }
 
 /**
