@@ -6,6 +6,7 @@ int main(int argc, char** argv) {
   EnvVariable* env = (EnvVariable*)malloc(sizeof(EnvVariable));
   char* cmd = (char*)malloc(sizeof(char)*256);
   char* dir = (char*)malloc(sizeof(char)*1024);
+
   init(&env);
 
   while(1) {
@@ -13,13 +14,47 @@ int main(int argc, char** argv) {
     printf("%s>", dir);
     fgets(cmd, 256, stdin);
 
+    /* Strip traling newline */
+    cmd[strlen(cmd)-1] = '\0';
+
+    printf("Command: %s\n", cmd);
+
+    /* Exit program */
+    if (strcmp(cmd, "exit") == 0)
+      break;
+
+    char* strArray[40];
+    int args_count = 0;
+
+    if(strstr(cmd, " ") != NULL) {
+      char* token = strtok(cmd, " ");
+      /* Tokenize command */
+      while(token != NULL) {
+        strArray[args_count] = (char*)malloc(sizeof(char)*strlen(token));
+        strcpy(strArray[args_count], token);
+        printf("[%s] -> %i\n", token, strlen(strArray[args_count]));
+        token = strtok(NULL, " ");
+        args_count++;
+      }
+    } else {
+      strArray[args_count] = (char*)malloc(sizeof(char)*strlen(cmd));
+    }
+
+    /* Search for command */
+
     memset(dir, '\0', strlen(dir));
     memset(cmd, '\0', strlen(cmd));
+    args_count--;
+    while(args_count > -1) {
+      free(strArray[args_count]);
+      args_count--;
+    }
   }
 
   /* Free memory */
   free(env);
   free(cmd);
+  free(dir);
 
   return 0;
 }
