@@ -1,6 +1,35 @@
 #include "util.h"
 
 /**
+ * Search for binary executable in profile's Path.
+ *
+ * @param bin Binary name to search for.
+ * @param env Stores profile environment variables' value.
+ * @result Returns -1 for no result and 0 for result.
+ */
+int search_bin(char* bin, EnvVariable** env) {
+  /* Tokenize */
+  printf("Current path: %s\n", (*env)->path);
+  return -1;
+}
+
+/**
+ * Get current directory.
+ *
+ * @param dir Stores current directory.
+ * @return
+ */
+void get_current_dir(char** dir) {
+  char tmp[1024];
+  if(getcwd(tmp, sizeof(tmp)) != NULL)
+    strcpy((*dir), tmp);
+  else {
+    (*dir) = NULL;
+    perror("getcwd() error.");
+  }
+}
+
+/**
  * Read environment variables' values.
  *
  * @param profile Profile file to read from.
