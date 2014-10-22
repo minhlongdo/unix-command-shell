@@ -6,6 +6,7 @@
 #include <string.h>
 #include <errno.h>
 #include <unistd.h>
+#include <dirent.h>
 #include "../datastructure/env.h"
 
 /* Find environment variable */
@@ -15,6 +16,6 @@ void remove_str(char* buffer, char* string, char** result);
 /* Get current dir */
 void get_current_dir(char** dir);
 /* Search for executable command */
-int search_bin(char* bin, EnvVariable** env);
+int search_bin(char** bin, EnvVariable** env, char** result);
 
 #endif

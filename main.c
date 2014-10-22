@@ -9,6 +9,7 @@ int main(int argc, char** argv) {
 
   init(&env);
 
+
   while(1) {
     get_current_dir(&dir);
     printf("%s>", dir);
@@ -17,7 +18,7 @@ int main(int argc, char** argv) {
     /* Strip traling newline */
     cmd[strlen(cmd)-1] = '\0';
 
-    printf("Command: %s\n", cmd);
+    //printf("Command: %s\n", cmd);
 
     /* Exit program */
     if (strcmp(cmd, "exit") == 0)
@@ -38,9 +39,12 @@ int main(int argc, char** argv) {
       }
     } else {
       strArray[args_count] = (char*)malloc(sizeof(char)*strlen(cmd));
+      strcpy(strArray[args_count],cmd);
     }
-
+    char* bin_dir;
     /* Search for command */
+    printf("Array content - Command: %s\n", strArray[0]);
+    int retval = search_bin(&strArray[0], &env, &bin_dir);
 
     memset(dir, '\0', strlen(dir));
     memset(cmd, '\0', strlen(cmd));
