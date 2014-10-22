@@ -11,7 +11,6 @@ int main(int argc, char** argv) {
   printf("Starting Unix Command Shell.\n");
   printf("HOME: %s",env->home);
   printf("PATH: %s",env->path);
-  printf("Current: %s\n", dir);
   */
 
   /* Terminal execution loop */
