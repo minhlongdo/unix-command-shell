@@ -28,6 +28,13 @@ void terminal_main(EnvVariable** env) {
   free(dir);
 }
 
+/**
+ * Change directory based on the given path (unix convention).
+ *
+ * @param dir Directory to change to.
+ * @param env Contains environment variables value from file profile.
+ * @return
+ */
 void change_dir(char* dir, EnvVariable** env) {
   char* dir_debug = (char*)malloc(sizeof(char)*1024);
   int flag = -1;
@@ -56,6 +63,12 @@ void change_dir(char* dir, EnvVariable** env) {
   free(dir_debug);
 }
 
+/**
+ * Get the current directory.
+ *
+ * @param dir Stores current directory.
+ * @return
+ */
 void current_dir(char** dir) {
   char tmp[1024];
   if(getcwd(tmp,sizeof(tmp)) != NULL) {
@@ -86,6 +99,13 @@ void command_parser(char* input, EnvVariable** env) {
   }
 }
 
+/**
+ * Read environment variable values from file.
+ *
+ * @param profile File to read from.
+ * @param env Stores read environment variable values from file.
+ * @return
+ */
 void read_env_val(const char* profile, EnvVariable** env) {
   FILE *infile;
   char line_buffer[BUFSIZ]; /* BUFSIZ is defined if you include stdio.h */
@@ -97,18 +117,26 @@ void read_env_val(const char* profile, EnvVariable** env) {
   while (fgets(line_buffer, sizeof(line_buffer), infile)) {
     if(strstr(line_buffer,"HOME") != NULL) {
       char* tmp;
-      replace(line_buffer, "HOME=", &tmp);
+      remove_substring(line_buffer, "HOME=", &tmp);
       (*env)->home = tmp;
     }
     else if(strstr(line_buffer,"PATH") != NULL) {
       char* tmp;
-      replace(line_buffer, "PATH=", &tmp);
+      remove_substring(line_buffer, "PATH=", &tmp);
       (*env)->path = tmp;
     }
   }
 }
 
-void replace(char* buffer, char* string, char **result) {
+/**
+ * Remove substring in a string with another string.
+ *
+ * @param buffer Source string.
+ * @param string String to be remove in the source string.
+ * @param result Stores source string without the removed string.
+ * @return
+ */
+void remove_substring(char* buffer, char* string, char **result) {
   int len_buffer = 0;
   int len_string = 0;
   while(buffer[len_buffer] != '\0') {
