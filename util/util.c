@@ -9,21 +9,19 @@
 void terminal_main(EnvVariable** env) {
   char* cmd = (char*)malloc(sizeof(char)*MAX_SIZE);
   char* dir = (char*)malloc(sizeof(char)*1024);
-  int i = 1;
 
   /* Actual loop */
   while(1) {
-    printf("Loop %i\n", i);
     current_dir(&dir);
     printf("%s>", dir);
     fgets(cmd, MAX_SIZE, stdin);
-    printf("Command: %s\n", cmd);
-    printf("Length of command: %i\n", strlen(cmd));
+
+    /* Parse command and trigger appropriate handler */
+    command_parser(&cmd, &(*env));
 
     /* Reset memory */
     memset(dir, '\0', sizeof(dir));
     memset(cmd, '\0', sizeof(cmd));
-    i++;
   }
 
 
@@ -100,21 +98,37 @@ void current_dir(char** dir) {
   }
 }
 
+/**
+ * Parse and tokenize command input and trigger appropriate event.
+ *
+ * @param cmd Command to be parsed.
+ * @param env Stores environment variables' values.
+ * @return
+ */
 void command_parser(char** cmd, EnvVariable** env) {
-  /* Parse command */
-  if (input != NULL) {
-    /* Check for in-built commands */
-    if (strcmp(input,"cd") == 0) {
+  /* If memory was allocated for it */
+  if ((*cmd) == NULL)
+    return;
 
-    } else if(strcmp(input,"pwd") == 0) {
+  /* Remove white space at the end of the string */
+  int len = strlen(*cmd);
+  (*cmd)[len-1] = '\0';
 
-    } else {
-      /* Checking for attempt to execute executable */
-      /* Executing none in-built commands */
-      char *command = input;
-      /* Split command from arguments */
-    }
+  char* strArray[10];
+  /* Tokenize command */
+  char* token = strtok((*cmd), " ");
+
+  int i = 0;
+  for(i=0; token != NULL;i++) {
+    strcpy(strArray, token);
+    printf("[%s] - %i\n", token, strlen(token));
+    token = strtok(NULL, " ");
   }
+  /*
+  while(token != NULL) {
+
+  }
+  */
 }
 
 /**
