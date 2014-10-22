@@ -1,26 +1,72 @@
 #include "util.h"
 
-void change_dir(char** curr_dir, char* dir, EnvVariable** env) {
-  if (dir != NULL) {
-    /* Move up one directory */
-    if(strcmp(dir, "..")) {
-    } else if(strcmp(dir, "")) {
-      /* Change to default directory, specified in the environment variable */
-    } else {
-      /* Change to specific directory */
-      /* Check in current directory */
-      /* Check for another absolute directory */
-    }
+void terminal_main(EnvVariable** env) {
+  char* cmd = (char*)malloc(sizeof(char)*MAX_SIZE);
+  char* dir = (char*)malloc(sizeof(char)*1024);
+
+  current_dir(&dir);
+
+  printf("Current directory: %s\n", dir);
+
+  int flag = chdir("..");
+  if (flag == 0) {
+    current_dir(&dir);
+    printf("Change to directory: %s\n", dir);
+  } else if(flag == -1) {
+    printf("Couldnt change directory.");
+    current_dir(&dir);
+    printf("Current directory: %s\n", dir);
+  } else {
+    perror("Unexpected error.");
   }
+
+  /* Reset memory */
+  memset(dir, '\0', sizeof(dir));
+
+  /* Release memory */
+  free(cmd);
+  free(dir);
 }
 
-char* current_dir(void) {
-  char cwd[1024];
-  if(getcwd(cwd,sizeof(cwd)) != NULL)
-    fprintf(stdout,"%s\n",cwd);
-  else
+void change_dir(char* dir, EnvVariable** env) {
+  char* dir_debug = (char*)malloc(sizeof(char)*1024);
+  int flag = -1;
+  if (dir == NULL) {
+    /* Change to assigned home directory written in the profile */
+    flag = chdir((*env)->home);
+    if (flag == -1) {
+      perror(("Directory '%s' does not exist.\n", (*env)->home));
+    } else {
+      printf("Directory change successful.\n");
+      current_dir(&dir_debug);
+      printf("Current directory: %s\n", dir_debug);
+    }
+  } else if (strcmp(dir, "..")) {
+    flag = chdir(dir);
+    if (flag == -1) {
+      current_dir(&dir_debug);
+      perror(("Directory parent '%s' does not exist.\n", dir_debug));
+
+    } else {
+      printf("Directory change to parent directory successful.\n");
+      current_dir(&dir_debug);
+      printf("Current directory: %s\n", dir_debug);
+    }
+  }
+  free(dir_debug);
+}
+
+void current_dir(char** dir) {
+  char tmp[1024];
+  if(getcwd(tmp,sizeof(tmp)) != NULL) {
+    /* Copy array to pointer */
+    strcpy((*dir), tmp);
+  }
+  else {
+    /* Reset string */
+    memset((*dir), 0, sizeof((*dir)));
     perror("getcwd() error");
-  return cwd;
+  }
 }
 
 void command_parser(char* input, EnvVariable** env) {
