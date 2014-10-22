@@ -17,7 +17,7 @@ void read_env_val(const char* profile, EnvVariable** env);
 /* Replace string */
 void remove_substring(char* buffer, char* string, char** result);
 /* Parse command */
-void command_parser(char* input, EnvVariable** env);
+void command_parser(char** cmd, EnvVariable** env);
 /* Change directory */
 void change_dir(char* dir, EnvVariable** env);
 /* Get current directory */

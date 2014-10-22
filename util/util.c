@@ -100,7 +100,7 @@ void current_dir(char** dir) {
   }
 }
 
-void command_parser(char* input, EnvVariable** env) {
+void command_parser(char** cmd, EnvVariable** env) {
   /* Parse command */
   if (input != NULL) {
     /* Check for in-built commands */
