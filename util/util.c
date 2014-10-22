@@ -1,12 +1,33 @@
 #include "util.h"
 
+/**
+ * Main body of unix command shell.
+ *
+ * @param env Contains environment variables' values.
+ * @return
+ */
 void terminal_main(EnvVariable** env) {
   char* cmd = (char*)malloc(sizeof(char)*MAX_SIZE);
   char* dir = (char*)malloc(sizeof(char)*1024);
+  int i = 1;
 
-  current_dir(&dir);
+  /* Actual loop */
+  while(1) {
+    printf("Loop %i\n", i);
+    current_dir(&dir);
+    printf("%s>", dir);
+    fgets(cmd, MAX_SIZE, stdin);
+    printf("Command: %s\n", cmd);
+    printf("Length of command: %i\n", strlen(cmd));
 
-  printf("Current directory: %s\n", dir);
+    /* Reset memory */
+    memset(dir, '\0', sizeof(dir));
+    memset(cmd, '\0', sizeof(cmd));
+    i++;
+  }
+
+
+
 
   int flag = chdir("..");
   if (flag == 0) {
@@ -19,9 +40,6 @@ void terminal_main(EnvVariable** env) {
   } else {
     perror("Unexpected error.");
   }
-
-  /* Reset memory */
-  memset(dir, '\0', sizeof(dir));
 
   /* Release memory */
   free(cmd);
