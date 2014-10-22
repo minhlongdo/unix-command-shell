@@ -22,6 +22,9 @@ void command_parser(char** cmd, EnvVariable** env);
 void change_dir(char* dir, EnvVariable** env);
 /* Get current directory */
 void current_dir(char** dir);
-/* terminal main */
+/* Terminal main */
 void terminal_main(EnvVariable** env);
+/* Check for executable command */
+int chk_exe_cmd(char* cmd);
+
 #endif

@@ -144,6 +144,7 @@ void command_parser(char** cmd, EnvVariable** env) {
     current_dir(&dir_curr);
     printf("%s\n", dir_curr);
     free(dir_curr);
+  } else if(chk_exe_cmd(cmd) == 0) {
   } else {
     /* Tokenize environment PATH value */
   }
@@ -152,6 +153,16 @@ void command_parser(char** cmd, EnvVariable** env) {
     free(strArray[i]);
     i--;
   }
+}
+
+/**
+ * Check for executable command in input
+ *
+ * @param cmd Command for unix command shell.
+ * @return
+ */
+int chk_exe_cmd(char* cmd) {
+  return -1;
 }
 
 /**
