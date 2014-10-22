@@ -1,6 +1,6 @@
 #include "util.h"
 
-void read_env_val(const char* profile, Terminal** terminal) {
+void read_env_val(const char* profile, EnvVariable** env) {
   FILE *infile;
   char line_buffer[BUFSIZ]; /* BUFSIZ is defined if you include stdio.h */
   infile = fopen(profile, "r");
@@ -12,13 +12,13 @@ void read_env_val(const char* profile, Terminal** terminal) {
     if(strstr(line_buffer,"HOME") != NULL) {
       char* tmp;
       replace(line_buffer, "HOME=", &tmp);
-      ((*terminal)->env)->home = tmp;
+      (*env)->home = tmp;
       //printf("%s",tmp);
     }
     else if(strstr(line_buffer,"PATH") != NULL) {
       char* tmp;
       replace(line_buffer, "PATH=", &tmp);
-      ((*terminal)->env)->path = tmp;
+      (*env)->path = tmp;
       //printf("%s",tmp);
     }
   }

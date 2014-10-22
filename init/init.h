@@ -4,8 +4,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "../util/util.h"
-#include "../datastructure/terminal.h"
+#include "../datastructure/env.h"
 
-void init(Terminal** terminal); /* Initiate Unix command shell */
+void init(EnvVariable** env); /* Initiate Unix command shell */
 
 #endif

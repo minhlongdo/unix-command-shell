@@ -1,5 +1,5 @@
 #include "init.h"
 
-void init(Terminal** terminal) {
-  read_env_val("profile", &(*terminal));
+void init(EnvVariable** env) {
+  read_env_val("profile", &(*env));
 }
