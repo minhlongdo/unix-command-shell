@@ -5,20 +5,22 @@
 int main(int argc, char** argv) {
 
   EnvVariable* env = (EnvVariable*)malloc(sizeof(EnvVariable));
-  char* cmd = (char*)malloc(sizeof(char)*100);
-  char* path_str = (char*)malloc(sizeof(char)*256);
-  char* tmp = (char*)malloc(sizeof(char)*100);
-  char* dir = current_dir();
   init(&env);
+
+  /* Debugging information.
   printf("Starting Unix Command Shell.\n");
   printf("HOME: %s",env->home);
   printf("PATH: %s",env->path);
   printf("Current: %s\n", dir);
+  */
 
-  /* Print {directory}>*/
+  /* Terminal execution loop */
+  terminal_main(&env);
+  /* Print {directory}>
   printf("%s>", dir);
   scanf("%s", cmd);
   printf("Entered command: %s\n", cmd);
+  */
   /* Read command */
   /* Parse command */
   /* Conditional executions */
@@ -27,9 +29,6 @@ int main(int argc, char** argv) {
 
   /* Free memory */
   free(env);
-  free(cmd);
-  free(tmp);
-  free(path_str);
 
   return 0;
 }
