@@ -11,6 +11,5 @@
 void read_env_val(const char* profile, Terminal** terminal);
 /* Replace string */
 void replace(char* buffer, char* string, char** result);
-/* Parse command */
-void command_parser(char* input, Terminal** terminal);
+
 #endif

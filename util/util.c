@@ -1,22 +1,5 @@
 #include "util.h"
 
-void command_parser(char* input, Terminal** terminal) {
-
-  if (*terminal != NULL) {
-    if ((*terminal)->env != NULL) {
-      /* Check for home and path variables */
-      if ((*terminal)->env->home == NULL)
-        perror("No value specified for HOME.\n");
-      if ((*terminal)->env->path == NULL)
-        perror("No value specified for PATH.\n");
-      if ((*terminal)->cur_dir == NULL)
-        perror("Unknown current directory.\n");
-    }
-  }
-
-  /* Parse command */
-}
-
 void read_env_val(const char* profile, Terminal** terminal) {
   FILE *infile;
   char line_buffer[BUFSIZ]; /* BUFSIZ is defined if you include stdio.h */
