@@ -10,7 +10,7 @@
 /* Find environment variable */
 void read_env_val(const char* profile, EnvVariable** env);
 /* Replace string */
-void replace(char* buffer, char* string, char** result);
+void remove_str(char* buffer, char* string, char** result);
 /* Search for executable command */
 int search_bin(EnvVariable** env);
 
