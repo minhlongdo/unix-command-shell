@@ -9,7 +9,9 @@ int main(int argc, char** argv) {
 
   init(&env);
 
-
+  /* Clear terminal */
+  system("clear");
+  
   while(1) {
     get_current_dir(&dir);
     printf("%s>", dir);
