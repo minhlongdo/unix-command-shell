@@ -37,7 +37,6 @@ int search_bin(char** bin, EnvVariable** env, char** result) {
     token = strtok(NULL,":");
   }
 
-  printf("Total paths: %i\n", paths);
   printf("Current path: %s\n", (*env)->path);
   free(path);
   return -1;
