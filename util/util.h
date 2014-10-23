@@ -17,5 +17,7 @@ void remove_str(char* buffer, char* string, char** result);
 void get_current_dir(char** dir);
 /* Search for executable command */
 int search_bin(char** bin, EnvVariable** env, char** result);
+/* Change directory */
+void change_dir(char** dir, EnvVariable** env);
 
 #endif

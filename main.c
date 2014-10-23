@@ -45,10 +45,34 @@ int main(int argc, char** argv) {
         strArray[args_count] = (char*)malloc(sizeof(char)*strlen(cmd));
         strcpy(strArray[args_count],cmd);
       }
-      char* bin_dir;
-      /* Search for command */
-      printf("Array content - Command: %s\n", strArray[0]);
-      int retval = search_bin(&strArray[0], &env, &bin_dir);
+
+      /* Check for builtin functions */
+      if (strcmp(strArray[0], "cd") == 0) {
+        if (args_count > 2) {
+          perror("Too many arguments");
+        } else if(args_count == 1) {
+          /* Change to default director */
+          change_dir(&strArray[1], &env);
+        } else if(args_count == 2) {
+          /* Change to another specified dir */
+          change_dir(&strArray[1], &env);
+        } else {
+          /* Unexpected error */
+          perror("Unexpected error.");
+          /* Free memory */
+          args_count--;
+          while(args_count > -1) {
+            free(strArray[args_count]);
+            args_count--;
+          }
+          break;
+        }
+      } else {
+        char* bin_dir;
+        /* Search for command */
+        printf("Array content - Command: %s\n", strArray[0]);
+        int retval = search_bin(&strArray[0], &env, &bin_dir);
+      }
       /* Free memory */
       args_count--;
       while(args_count > -1) {
