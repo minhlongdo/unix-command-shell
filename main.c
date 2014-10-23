@@ -63,6 +63,7 @@ int main(int argc, char** argv) {
           /* Unexpected error */
           perror("Unexpected error.");
           /* Free memory */
+          args_count--;
           while(args_count > -1) {
             free(strArray[args_count]);
             args_count--;
