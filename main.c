@@ -11,7 +11,7 @@ int main(int argc, char** argv) {
 
   /* Clear terminal */
   system("clear");
-  
+
   while(1) {
     get_current_dir(&dir);
     printf("%s>", dir);
@@ -25,36 +25,40 @@ int main(int argc, char** argv) {
     /* Exit program */
     if (strcmp(cmd, "exit") == 0)
       break;
+    else if(strcmp(cmd, "clear") == 0)
+      system("clear");
+    else {
+      char* strArray[40];
+      int args_count = 0;
 
-    char* strArray[40];
-    int args_count = 0;
-
-    if(strstr(cmd, " ") != NULL) {
-      char* token = strtok(cmd, " ");
-      /* Tokenize command */
-      while(token != NULL) {
-        strArray[args_count] = (char*)malloc(sizeof(char)*strlen(token));
-        strcpy(strArray[args_count], token);
-        printf("[%s] -> %i\n", token, strlen(strArray[args_count]));
-        token = strtok(NULL, " ");
-        args_count++;
+      if(strstr(cmd, " ") != NULL) {
+        char* token = strtok(cmd, " ");
+        /* Tokenize command */
+        while(token != NULL) {
+          strArray[args_count] = (char*)malloc(sizeof(char)*strlen(token));
+          strcpy(strArray[args_count], token);
+          printf("[%s] -> %i\n", token, strlen(strArray[args_count]));
+          token = strtok(NULL, " ");
+          args_count++;
+        }
+      } else {
+        strArray[args_count] = (char*)malloc(sizeof(char)*strlen(cmd));
+        strcpy(strArray[args_count],cmd);
       }
-    } else {
-      strArray[args_count] = (char*)malloc(sizeof(char)*strlen(cmd));
-      strcpy(strArray[args_count],cmd);
+      char* bin_dir;
+      /* Search for command */
+      printf("Array content - Command: %s\n", strArray[0]);
+      int retval = search_bin(&strArray[0], &env, &bin_dir);
+      /* Free memory */
+      args_count--;
+      while(args_count > -1) {
+        free(strArray[args_count]);
+        args_count--;
+      }
     }
-    char* bin_dir;
-    /* Search for command */
-    printf("Array content - Command: %s\n", strArray[0]);
-    int retval = search_bin(&strArray[0], &env, &bin_dir);
 
     memset(dir, '\0', strlen(dir));
     memset(cmd, '\0', strlen(cmd));
-    args_count--;
-    while(args_count > -1) {
-      free(strArray[args_count]);
-      args_count--;
-    }
   }
 
   /* Free memory */
