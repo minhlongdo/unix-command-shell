@@ -47,9 +47,11 @@ int main(int argc, char** argv) {
       }
       char* bin_dir;
       /* Search for command */
-      printf("Array content - Command: %s\n", strArray[0]);
+      //printf("Array content - Command: %s\n", strArray[0]);
       int retval = search_bin(&strArray[0], &env, &bin_dir);
+      printf("Binary path: %s\n", bin_dir);
       /* Free memory */
+      free(bin_dir);
       args_count--;
       while(args_count > -1) {
         free(strArray[args_count]);
