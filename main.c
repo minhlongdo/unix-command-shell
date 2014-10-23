@@ -1,4 +1,5 @@
 #include "init/init.h"
+#include "util/util.h"
 #include "datastructure/env.h"
 #include "built-in/builtin.h"
 
@@ -76,6 +77,13 @@ int main(int argc, char** argv) {
         //printf("Array content - Command: %s\n", strArray[0]);
         int retval = search_bin(&strArray[0], &env, &bin_dir);
         printf("Binary path: %s\n", bin_dir);
+
+        int status = sys_call(&bin_dir, &strArray);
+        if (status == 0)
+          printf("Success.\n");
+        else if (status == -1)
+          printf("Failure.\n");
+
         free(bin_dir);
       }
 

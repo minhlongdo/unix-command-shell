@@ -1,5 +1,22 @@
 #include "util.h"
 
+int sys_call(char**bin_cmd, char**args) {
+  int status = 0;
+  pid_t pid;
+
+  pid = fork();
+  if (pid == 0) {
+    execl((*bin_cmd), (*args), NULL);
+    _exit(EXIT_FAILURE);
+  } else if (pid < 0) {
+    status = -1;
+  } else {
+    if(waitpid(pid, &status, 0) != pid)
+      status = -1;
+  }
+  return status;
+}
+
 /**
  * Search for binary executable in profile's Path.
  *
