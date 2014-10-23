@@ -14,18 +14,25 @@ int search_bin(char** bin, EnvVariable** env, char** result) {
 
   char* token = strtok(path, ":");
   while(token != NULL) {
-    printf("PATH: %s\n", token);
+    //printf("PATH: %s\n", token);
     /* Open directory and find for binary executable */
     DIR* dp;
     struct dirent* entry;
     if((dp = opendir(token)) == NULL) {
       fprintf(stderr,"cannot open directory: %s\n", token);
     } else {
-      printf("Directory %s\n", token);
+      //printf("Directory %s\n", token);
       while((entry = readdir(dp)) != NULL) {
         //int total_len = strlen(token) + strlen(entry->d_name) + 1;
         if(strcmp(entry->d_name, *bin) == 0) {
           //printf("Path of binary: %s/%s\n", token, entry->d_name);
+
+          /* allocate memory */
+          *result = (char*)malloc(sizeof(char)*(strlen(token) + strlen(entry->d_name))+2);
+          strcpy((*result), token);
+          strcat((*result), "/");
+          strcat((*result), entry->d_name);
+
           closedir(dp);
           free(path);
           return 0;

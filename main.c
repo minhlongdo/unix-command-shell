@@ -45,6 +45,7 @@ int main(int argc, char** argv) {
       } else {
         strArray[args_count] = (char*)malloc(sizeof(char)*strlen(cmd));
         strcpy(strArray[args_count],cmd);
+        args_count++;
       }
 
       /* Check for builtin functions */
@@ -58,10 +59,10 @@ int main(int argc, char** argv) {
           /* Change to another specified dir */
           change_dir(&strArray[1], &env);
         } else {
+          printf("Number of args: %i\n", args_count);
           /* Unexpected error */
           perror("Unexpected error.");
           /* Free memory */
-          args_count--;
           while(args_count > -1) {
             free(strArray[args_count]);
             args_count--;
@@ -71,9 +72,12 @@ int main(int argc, char** argv) {
       } else {
         char* bin_dir;
         /* Search for command */
-        printf("Array content - Command: %s\n", strArray[0]);
+        //printf("Array content - Command: %s\n", strArray[0]);
         int retval = search_bin(&strArray[0], &env, &bin_dir);
+        printf("Binary path: %s\n", bin_dir);
+        free(bin_dir);
       }
+
       /* Free memory */
       args_count--;
       while(args_count > -1) {
