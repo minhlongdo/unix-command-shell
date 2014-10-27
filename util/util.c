@@ -6,7 +6,7 @@ int sys_call(char**bin_cmd, char**args) {
 
   pid = fork();
   if (pid == 0) {
-    execl((*bin_cmd), (*args), NULL);
+    execv((*bin_cmd), (*args));
     _exit(EXIT_FAILURE);
   } else if (pid < 0) {
     status = -1;
