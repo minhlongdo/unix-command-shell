@@ -15,7 +15,7 @@ void change_dir(char** dir, EnvVariable** env) {
 	if((*dir) == NULL) {
 		flag = chdir((*env)->home);
 		if (flag == -1) {
-			fprintf(stderr, "directory %s does not exist.", (*env)->home);
+			fprintf(stderr, "directory %s does not exist.\n", (*env)->home);
 		} else {
 			memset(debug, '\0', 1024);
 			printf("Directory change successful.\n");
@@ -25,7 +25,7 @@ void change_dir(char** dir, EnvVariable** env) {
 	} else {
 		flag = chdir((*dir));
 		if (flag == -1) {
-			fprintf(stderr, "directory %s does not exist.", (*dir));
+			fprintf(stderr, "directory %s does not exist.\n", (*dir));
 		} else {
 			memset(debug, '\0', 1024);
 			printf("Directory change successful.\n");
