@@ -78,13 +78,36 @@ int main(int argc, char** argv) {
         int retval = search_bin(&strArray[0], &env, &bin_dir);
         printf("Binary path: %s\n", bin_dir);
 
-        int status = sys_call(&bin_dir, &strArray);
+        int i=0;
+        int length = 0;
+        for(i=0;i<args_count;i++)
+          length = length + strlen(strArray[i]);
+
+        printf("Total length: %i\n", length);
+
+        char* command = (char*)malloc(sizeof(char)*(length + 1 + (length - 1)));
+
+        if(command == NULL)
+          perror("Unable to allocate memory.\n");
+
+        strcpy(command, bin_dir);
+        printf("Current command: %s\n", command);
+        for(i=1;i<args_count;i++) {
+          strcat(command, " ");
+          strcat(command, strArray[i]);
+        }
+
+        printf("End command: %s\n", command);
+
+
+        int status = sys_call(&bin_dir, &command);
         if (status == 0)
           printf("Success.\n");
         else if (status == -1)
           printf("Failure.\n");
 
         free(bin_dir);
+        free(command);
       }
 
       /* Free memory */
