@@ -146,7 +146,7 @@ int search_bin(char** bin, EnvVariable** env, char** result) {
     token = strtok(NULL,":");
   }
 
-  printf("Current path: %s\n", (*env)->path);
+  //printf("Current path: %s\n", (*env)->path);
   free(path);
   return -1;
 }
