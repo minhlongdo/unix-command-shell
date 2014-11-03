@@ -46,8 +46,8 @@ int main(int argc, char** argv) {
         change_env_var(&env, &home, &env_val);
 
         free(env_val);
-        //printf("Current HOME: %s\n", env->home);
-        //printf("Current PATH: %s\n", env->path);
+        printf("Current HOME: %s\n", env->home);
+        printf("Current PATH: %s\n", env->path);
       }
 
     } else if (strstr(cmd, "$PATH=") != NULL) {
@@ -64,7 +64,7 @@ int main(int argc, char** argv) {
         int len = strlen(cmd) - strlen(path);
         //printf("PATH value length: %i\n", len);
         //printf("Length of $PATH=: %i\n", strlen(path));
-        char* env_val = (char*)malloc(sizeof(char)*len + 1);
+        char* env_val = (char*)malloc(sizeof(char)*len + 2);
         strcpy_range(&env_val, &cmd, strlen(path), strlen(cmd));
         change_env_var(&env, &path, &env_val);
 
@@ -91,6 +91,7 @@ int main(int argc, char** argv) {
         strArray[args_count] = (char*)malloc(sizeof(char)*strlen(cmd));
         strcpy(strArray[args_count],cmd);
         args_count++;
+        strArray[args_count] = NULL;
       }
 
       /* Check for builtin functions */
