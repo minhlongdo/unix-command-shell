@@ -1,5 +1,52 @@
 #include "util.h"
 
+int sys_call(char** bin_cmd, char** args) {
+
+  char* args_command = (char*)malloc(sizeof(char)*strlen(*args));
+  strcpy(args_command, *args);
+  //remove_str(&(*bin_cmd), &(*args), &args_command);
+  printf("Arguments: %s\n", args_command);
+
+  int status = 0;
+  pid_t pid;
+
+  char *paramList[40];
+  int i=0;
+  char *token = strtok(args_command, " ");
+
+  while(token != NULL) {
+    paramList[i] = (char*)malloc(sizeof(char)*strlen(token));
+    strcpy(paramList[i], token);
+    printf("%s -> %s\n", token, paramList[i]);
+    token = strtok(NULL," ");
+    printf("Token: %s\n", token);
+    i++;
+  }
+  printf("Number of iterations: %i\n", i);
+  paramList[i] = NULL;
+
+  pid = fork();
+  if (pid == 0) {
+    if(i <= 1)
+      execl(*bin_cmd, *args, NULL);
+    else if (i > 1)
+      execv(*bin_cmd, paramList);
+    _exit(EXIT_FAILURE);
+  } else if (pid < 0) {
+    status = -1;
+  } else {
+    if(waitpid(pid, &status, 0) != pid)
+      status = -1;
+  }
+
+  free(args_command);
+  i = i - 1;
+  while(i > -1)
+    free(paramList[i--]);
+
+  return status;
+}
+
 /**
  * Copies from source string to destination string from a specified range.
  *

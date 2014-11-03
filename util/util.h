@@ -3,9 +3,12 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stddef.h>
 #include <string.h>
 #include <errno.h>
 #include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 #include <dirent.h>
 #include "../datastructure/env.h"
 
@@ -21,5 +24,8 @@ int search_bin(char** bin, EnvVariable** env, char** result);
 void change_env_var(EnvVariable** env, char** env_var, char** env_val);
 /* String range copy */
 void strcpy_range(char** dest, char** src, int begin, int end);
+/* Execute shell command */
+int sys_call(char**bin_cmd, char**args);
+>>>>>>> fork_exec
 
 #endif
