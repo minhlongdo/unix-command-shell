@@ -13,7 +13,9 @@ void change_dir(char** dir, EnvVariable** env) {
 
 	int flag = -1;
 	if((*dir) == NULL) {
-		flag = chdir((*env)->home);
+		//printf("Default directory: %s\n", (*env)->home);
+		char *home = (*env)-> home;
+		flag = chdir(home);
 		if (flag == -1) {
 			fprintf(stderr, "directory %s does not exist.\n", (*env)->home);
 		} else {

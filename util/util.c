@@ -1,5 +1,12 @@
 #include "util.h"
 
+/**
+ * Execute program with its given arguments.
+ *
+ * @param bin_cmd Location of binary executable.
+ * @param args Arguments for the program.
+ * @return status 0 for success and -1 for fail. 
+ */
 int sys_call(char** bin_cmd, char** args) {
 
   char* args_command = (char*)malloc(sizeof(char)*strlen(*args));
@@ -45,6 +52,54 @@ int sys_call(char** bin_cmd, char** args) {
     free(paramList[i--]);
 
   return status;
+}
+
+/**
+ * Copies from source string to destination string from a specified range.
+ *
+ * @param dest Destination string to be copied to.
+ * @param src Source string to be copied from.
+ * @param begin Starting index to copied from.
+ * @param end End index to be copied from.
+ * @return
+ */
+void strcpy_range(char** dest, char** src, int begin, int end) {
+  if((*dest) == NULL)
+    perror("Failed to allocate memory.\n");
+
+  /* Copy from src[begin] until src[end] to dest */
+  int i = 0;
+  for(i=0;i<strlen(*src);i++) {
+    if(begin == end)
+      break;
+    (*dest)[i] = (*src)[begin++];
+  }
+}
+
+/**
+ * Change environment variable value.
+ *
+ * @param env Stores environment variables' values.
+ * @param env_var Environment variable to be modified.
+ * @param env_val Environment variable to be changed to.
+ * @return
+ */
+void change_env_var(EnvVariable** env, char** env_var, char** env_val) {
+  //printf("Current HOME: %s\n", (*env)->home);
+  //printf("Current PATH: %s\n", (*env)->path);
+  if(strcmp((*env_var),"$HOME=") == 0) {
+    free((*env)->home);
+    (*env)->home = (char*)malloc(sizeof(char)*strlen(*env_val));
+    strcpy((*env)->home, (*env_val));
+  } else if (strcmp((*env_var), "$PATH=") == 0) {
+    free((*env)->path);
+    (*env)->path = (char*)malloc(sizeof(char)*strlen(*env_val));
+    strcpy((*env)->path, (*env_val));
+  } else {
+    fprintf(stderr, "Environment variable does not exist.");
+  }
+  //printf("Current HOME: %s\n", (*env)->home);
+  //printf("Current PATH: %s\n", (*env)->path);
 }
 
 /**

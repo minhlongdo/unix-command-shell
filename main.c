@@ -29,6 +29,50 @@ int main(int argc, char** argv) {
       break;
     else if(strcmp(cmd, "clear") == 0)
       system("clear");
+    else if (strstr(cmd, "$HOME=") != NULL) {
+      /* Check if the fist characters are correct */
+      char* home = "$HOME=";
+      int i = 0;
+      for(i=0;i<strlen(home);i++) {
+        if(cmd[i] != home[i])
+          i = -1;
+          break;
+      }
+      if (i != -1) {
+        /* Replace environment variable HOME value */
+        int len = strlen(cmd) - strlen(home);
+        char* env_val = (char*)malloc(sizeof(char)*len + 1);
+        strcpy_range(&env_val, &cmd, strlen(home), strlen(cmd));
+        change_env_var(&env, &home, &env_val);
+
+        free(env_val);
+        printf("Current HOME: %s\n", env->home);
+        printf("Current PATH: %s\n", env->path);
+      }
+
+    } else if (strstr(cmd, "$PATH=") != NULL) {
+      /* Check if the fist characters are correct */
+      char* path = "$PATH=";
+      int i = 0;
+      for(i=0;i<strlen(path);i++) {
+        if(cmd[i] != path[i])
+          i = -1;
+          break;
+      }
+      if (i != -1) {
+        /* Replace environment variable PATH value */
+        int len = strlen(cmd) - strlen(path);
+        //printf("PATH value length: %i\n", len);
+        //printf("Length of $PATH=: %i\n", strlen(path));
+        char* env_val = (char*)malloc(sizeof(char)*len + 2);
+        strcpy_range(&env_val, &cmd, strlen(path), strlen(cmd));
+        change_env_var(&env, &path, &env_val);
+
+        free(env_val);
+        //printf("Current HOME: %s\n", env->home);
+        //printf("Current PATH: %s\n", env->path);
+      }
+    }
     else {
       char* strArray[40];
       int args_count = 0;
@@ -47,6 +91,7 @@ int main(int argc, char** argv) {
         strArray[args_count] = (char*)malloc(sizeof(char)*strlen(cmd));
         strcpy(strArray[args_count],cmd);
         args_count++;
+        strArray[args_count] = NULL;
       }
 
       /* Check for builtin functions */
