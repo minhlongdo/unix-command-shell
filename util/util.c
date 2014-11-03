@@ -7,8 +7,6 @@ int sys_call(char** bin_cmd, char** args) {
   //remove_str(&(*bin_cmd), &(*args), &args_command);
   printf("Arguments: %s\n", args_command);
 
-  int args_count = 0;
-
   int status = 0;
   pid_t pid;
 
@@ -19,9 +17,12 @@ int sys_call(char** bin_cmd, char** args) {
   while(token != NULL) {
     paramList[i] = (char*)malloc(sizeof(char)*strlen(token));
     strcpy(paramList[i], token);
+    printf("%s -> %s\n", token, paramList[i]);
     token = strtok(NULL," ");
+    printf("Token: %s\n", token);
     i++;
   }
+  printf("Number of iterations: %i\n", i);
   paramList[i] = NULL;
 
   pid = fork();
@@ -39,6 +40,9 @@ int sys_call(char** bin_cmd, char** args) {
   }
 
   free(args_command);
+  i = i - 1;
+  while(i > -1)
+    free(paramList[i--]);
 
   return status;
 }

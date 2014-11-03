@@ -20,8 +20,7 @@ int main(int argc, char** argv) {
     fgets(cmd, 256, stdin);
 
     /* Strip traling newline */
-    if(cmd[strlen(cmd-1)] == '\n')
-      cmd[strlen(cmd)-1] = '\0';
+    cmd[strlen(cmd)-1] = '\0';
 
     //printf("Command: %s\n", cmd);
 
