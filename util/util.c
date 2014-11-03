@@ -1,5 +1,12 @@
 #include "util.h"
 
+/**
+ * Execute program with its given arguments.
+ *
+ * @param bin_cmd Location of binary executable.
+ * @param args Arguments for the program.
+ * @return status 0 for success and -1 for fail. 
+ */
 int sys_call(char** bin_cmd, char** args) {
 
   char* args_command = (char*)malloc(sizeof(char)*strlen(*args));
