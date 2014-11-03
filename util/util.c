@@ -5,14 +5,14 @@
  *
  * @param bin_cmd Location of binary executable.
  * @param args Arguments for the program.
- * @return status 0 for success and -1 for fail. 
+ * @return status 0 for success and -1 for fail.
  */
 int sys_call(char** bin_cmd, char** args) {
 
   char* args_command = (char*)malloc(sizeof(char)*strlen(*args));
   strcpy(args_command, *args);
   //remove_str(&(*bin_cmd), &(*args), &args_command);
-  printf("Arguments: %s\n", args_command);
+  //printf("Arguments: %s\n", args_command);
 
   int status = 0;
   pid_t pid;
@@ -24,12 +24,12 @@ int sys_call(char** bin_cmd, char** args) {
   while(token != NULL) {
     paramList[i] = (char*)malloc(sizeof(char)*strlen(token));
     strcpy(paramList[i], token);
-    printf("%s -> %s\n", token, paramList[i]);
+    //printf("%s -> %s\n", token, paramList[i]);
     token = strtok(NULL," ");
-    printf("Token: %s\n", token);
+    //printf("Token: %s\n", token);
     i++;
   }
-  printf("Number of iterations: %i\n", i);
+  //printf("Number of iterations: %i\n", i);
   paramList[i] = NULL;
 
   pid = fork();

@@ -46,8 +46,8 @@ int main(int argc, char** argv) {
         change_env_var(&env, &home, &env_val);
 
         free(env_val);
-        printf("Current HOME: %s\n", env->home);
-        printf("Current PATH: %s\n", env->path);
+        //printf("Current HOME: %s\n", env->home);
+        //printf("Current PATH: %s\n", env->path);
       }
 
     } else if (strstr(cmd, "$PATH=") != NULL) {
@@ -105,7 +105,7 @@ int main(int argc, char** argv) {
           /* Change to another specified dir */
           change_dir(&strArray[1], &env);
         } else {
-          printf("Number of args: %i\n", args_count);
+          //printf("Number of args: %i\n", args_count);
           /* Unexpected error */
           perror("Unexpected error.");
           /* Free memory */
@@ -122,14 +122,14 @@ int main(int argc, char** argv) {
         //printf("Array content - Command: %s\n", strArray[0]);
         int retval = search_bin(&strArray[0], &env, &bin_dir);
         if (retval == 0) {
-          printf("Binary path: %s\n", bin_dir);
+          //printf("Binary path: %s\n", bin_dir);
 
           int i=0;
           int length = 0;
           for(i=0;i<args_count;i++)
             length = length + strlen(strArray[i]);
 
-          printf("Total length: %i\n", length);
+          //printf("Total length: %i\n", length);
 
           char* command = (char*)malloc(sizeof(char)*(length + 1 + (length - 1)));
 
@@ -137,13 +137,13 @@ int main(int argc, char** argv) {
             perror("Unable to allocate memory.\n");
 
           strcpy(command, bin_dir);
-          printf("Current command: %s\n", command);
+          //printf("Current command: %s\n", command);
           for(i=1;i<args_count;i++) {
             strcat(command, " ");
             strcat(command, strArray[i]);
           }
 
-          printf("End command: %s\n", command);
+          //printf("End command: %s\n", command);
 
 
           int status = sys_call(&bin_dir, &command);
