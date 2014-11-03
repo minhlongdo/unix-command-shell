@@ -26,6 +26,5 @@ void change_env_var(EnvVariable** env, char** env_var, char** env_val);
 void strcpy_range(char** dest, char** src, int begin, int end);
 /* Execute shell command */
 int sys_call(char**bin_cmd, char**args);
->>>>>>> fork_exec
 
 #endif
