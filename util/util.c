@@ -88,11 +88,13 @@ void change_env_var(EnvVariable** env, char** env_var, char** env_val) {
   //printf("Current HOME: %s\n", (*env)->home);
   //printf("Current PATH: %s\n", (*env)->path);
   if(strcmp((*env_var),"$HOME=") == 0) {
-    free((*env)->home);
+    if((*env)->home != NULL)
+      free((*env)->home);
     (*env)->home = (char*)malloc(sizeof(char)*strlen(*env_val));
     strcpy((*env)->home, (*env_val));
   } else if (strcmp((*env_var), "$PATH=") == 0) {
-    free((*env)->path);
+    if((*env)->path != NULL)
+      free((*env)->path);
     (*env)->path = (char*)malloc(sizeof(char)*strlen(*env_val));
     strcpy((*env)->path, (*env_val));
   } else {

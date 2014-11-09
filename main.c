@@ -120,43 +120,41 @@ int main(int argc, char** argv) {
         char* bin_dir;
         /* Search for command */
         //printf("Array content - Command: %s\n", strArray[0]);
-        int retval = search_bin(&strArray[0], &env, &bin_dir);
-        if (retval == 0) {
-          //printf("Binary path: %s\n", bin_dir);
 
-          int i=0;
-          int length = 0;
-          for(i=0;i<args_count;i++)
-            length = length + strlen(strArray[i]);
+        search_bin(&strArray[0], &env, &bin_dir);
+        //printf("Binary path: %s\n", bin_dir);
 
-          //printf("Total length: %i\n", length);
+        int i=0;
+        int length = 0;
+        for(i=0;i<args_count;i++)
+          length = length + strlen(strArray[i]);
 
-          char* command = (char*)malloc(sizeof(char)*(length + 1 + (length - 1)));
+        //printf("Total length: %i\n", length);
 
-          if(command == NULL)
-            perror("Unable to allocate memory.\n");
+        char* command = (char*)malloc(sizeof(char)*(length + 1 + (length - 1)));
 
-          strcpy(command, bin_dir);
-          //printf("Current command: %s\n", command);
-          for(i=1;i<args_count;i++) {
-            strcat(command, " ");
-            strcat(command, strArray[i]);
-          }
+        if(command == NULL)
+          perror("Unable to allocate memory.\n");
 
-          //printf("End command: %s\n", command);
-
-
-          int status = sys_call(&bin_dir, &command);
-          if (status == 0)
-            printf("Success.\n");
-          else if (status == -1)
-            printf("Failure.\n");
-
-          free(bin_dir);
-          free(command);
-        } else {
-          printf("%s not found.\n", strArray[0]);
+        strcpy(command, bin_dir);
+        //printf("Current command: %s\n", command);
+        for(i=1;i<args_count;i++) {
+          strcat(command, " ");
+          strcat(command, strArray[i]);
         }
+
+        //printf("End command: %s\n", command);
+
+
+        sys_call(&bin_dir, &command);
+        /*
+        if (status == 0)
+          printf("Success.\n");
+        else if (status == -1)
+          printf("Failure.\n");
+        */
+        free(bin_dir);
+        free(command);
       }
 
       /* Free memory */
